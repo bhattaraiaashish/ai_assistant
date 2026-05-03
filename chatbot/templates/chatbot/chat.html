@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Chat - HoklabariAI{% endblock %}
+
+{% block extra_js %}
+    <script src="{% static 'chatbot/chat.js' %}"></script>
+{% endblock %}
+
+{% block content %}
+<section class="chat-wrapper" aria-label="AI chat">
+    <div class="chat-header">
+        <div>
+            <p class="eyebrow">AI assistant</p>
+            <h1>Ask anything. Keep the flow.</h1>
+        </div>
+        <span class="chat-count">{{ chats|length }} saved messages</span>
+    </div>
+
+    <div class="chat-box" id="chat-box">
+        {% if chats %}
+            {% for c in chats %}
+                <article class="message user">
+                    <span class="message-label">You</span>
+                    <p>{{ c.message }}</p>
+                </article>
+                <article class="message bot">
+                    <span class="message-label">HoklabariAI</span>
+                    <div class="bot-response">{{ c.response|safe }}</div>
+                </article>
+            {% endfor %}
+        {% else %}
+            <div class="empty-chat">
+                <h2>Start a new conversation</h2>
+                <p>Ask for help writing, coding, planning, learning, or exploring ideas.</p>
+            </div>
+        {% endif %}
+    </div>
+
+    <form method="POST" class="chat-input-area" id="chat-form">
+        {% csrf_token %}
+        <label class="sr-only" for="messageInput">Message</label>
+        <textarea id="messageInput" name="message" rows="1" placeholder="Type your message..." required></textarea>
+        <button type="submit" id="sendButton">Send</button>
+    </form>
+</section>
+{% endblock %}

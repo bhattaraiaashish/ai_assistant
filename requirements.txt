@@ -1,0 +1,4 @@
+django==6.0.4
+google-genai==1.73.1
+markdown==3.10.2
+python-dotenv==1.2.2

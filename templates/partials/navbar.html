@@ -1,0 +1,25 @@
+<header class="navbar">
+    <a class="brand-link" href="{% url 'chatbot' %}">
+        <span class="brand-mark" aria-hidden="true">AI</span>
+        <span class="brand">HoklabariAI</span>
+    </a>
+
+    <nav class="nav-right" aria-label="Primary navigation">
+        {% if user.is_authenticated %}
+            <span class="user-name">Hi, {{ user.username }}</span>
+
+            <form method="POST" action="{% url 'clear_chat' %}">
+                {% csrf_token %}
+                <button class="nav-btn secondary" type="submit">Clear Chat</button>
+            </form>
+
+            <form method="POST" action="{% url 'logout' %}">
+                {% csrf_token %}
+                <button class="nav-btn logout" type="submit">Logout</button>
+            </form>
+        {% else %}
+            <a href="{% url 'login' %}" class="nav-btn">Login</a>
+            <a href="{% url 'register' %}" class="nav-btn secondary">Register</a>
+        {% endif %}
+    </nav>
+</header>

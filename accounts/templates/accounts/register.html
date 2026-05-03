@@ -1,0 +1,79 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HoklabariAI - Register</title>
+
+    <link rel="stylesheet" href="{% static 'accounts/css/login.css' %}">
+</head>
+
+<body>
+    {% if messages %}
+        <div id="msg-container">
+            {% for message in messages %}
+                <div class="alert {{ message.tags }}">
+                    {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
+
+    <div class="background"></div>
+
+    <div class="login-container">
+        <div class="left-panel">
+            <div class="logo">
+                <span class="bot-icon">AI</span>
+                HoklabariAI
+            </div>
+
+            <p class="tagline">
+                Join the next-generation AI chatbot experience.
+            </p>
+
+            <img src="{% static 'accounts/images/loginimg.jpg' %}" class="robot-img" alt="">
+        </div>
+
+        <div class="right-panel">
+            <div class="login-box">
+                <h2>Create Account</h2>
+                <p>Register to start chatting with AI</p>
+
+                <form method="POST" id="registerForm">
+                    {% csrf_token %}
+
+                    <input type="text" name="username" placeholder="Username" autocomplete="username" required>
+                    <input type="email" name="email" placeholder="Email" autocomplete="email" required>
+
+                    <div class="password-box">
+                        <input type="password" name="password" id="password" placeholder="Password" autocomplete="new-password" required>
+                        <span class="toggle" onclick="togglePassword('password')">Show</span>
+                    </div>
+
+                    <div class="password-box">
+                        <input type="password" name="confirm_password" id="confirm_password" placeholder="Confirm Password" autocomplete="new-password" required>
+                        <span class="toggle" onclick="togglePassword('confirm_password')">Show</span>
+                    </div>
+
+                    <div class="strength">
+                        <div id="strengthBar"></div>
+                    </div>
+
+                    <button id="register-btn" type="submit">Register</button>
+
+                    <p id="errorText"></p>
+                </form>
+
+                <p class="bottom-text">
+                    Already have an account? <a href="{% url 'login' %}">Login</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script src="{% static 'accounts/js/login.js' %}"></script>
+</body>
+</html>
