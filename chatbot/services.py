@@ -1,5 +1,6 @@
 from django.conf import settings
 from google import genai
+from google.genai import types
 
 
 def get_ai_response(message):
@@ -9,7 +10,13 @@ def get_ai_response(message):
             ".env file and restart the server."
         )
 
-    client = genai.Client(api_key=settings.GEMINI_API_KEY)
+    client = genai.Client(
+        api_key=settings.GEMINI_API_KEY,
+        http_options=types.HttpOptions(
+            client_args={"trust_env": False},
+            async_client_args={"trust_env": False},
+        ),
+    )
     response = client.models.generate_content(
         model=settings.GEMINI_MODEL,
         contents=message,
